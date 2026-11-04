@@ -10,7 +10,8 @@ struct Speak2TranscribeApp: App {
                 .environmentObject(delegate.engine)
                 .frame(minWidth: 480, minHeight: 300)
         }
-        .defaultSize(width: 640, height: 420)
+        // MyTranscribe's window: 640 × 420 of content under a 32-point title bar.
+        .defaultSize(width: 640, height: 452)
     }
 }
 

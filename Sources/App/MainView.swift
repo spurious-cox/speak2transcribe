@@ -22,9 +22,10 @@ struct MainView: View {
 
                 Spacer()
 
-                Button("Copy") { copy() }.disabled(engine.text.isEmpty)
-                Button("Save…") { save() }.disabled(engine.text.isEmpty)
+                // Same order as MyTranscribe.
                 Button("Clear") { engine.clear() }.disabled(engine.running || engine.text.isEmpty)
+                Button("Save…") { save() }.disabled(engine.text.isEmpty)
+                Button("Copy") { copy() }.disabled(engine.text.isEmpty)
             }
 
             ScrollViewReader { proxy in
