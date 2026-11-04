@@ -17,6 +17,7 @@ struct MainView: View {
                 }
                 .keyboardShortcut(.return, modifiers: .command)
                 .frame(width: 80)
+                .help("Start or stop transcribing (⌘Return)")
 
                 SourceSwitch(source: $source, disabled: engine.running)
 
@@ -24,8 +25,11 @@ struct MainView: View {
 
                 // Same order as MyTranscribe.
                 Button("Clear") { engine.clear() }.disabled(engine.running || engine.text.isEmpty)
+                    .help("Empty the text")
                 Button("Save…") { save() }.disabled(engine.text.isEmpty)
+                    .help("Save the text to a file")
                 Button("Copy") { copy() }.disabled(engine.text.isEmpty)
+                    .help("Copy the text to the clipboard")
             }
 
             ScrollViewReader { proxy in
@@ -51,6 +55,7 @@ struct MainView: View {
                     get: { floating },
                     set: { PanelController.shared.setFloating($0) }))
                     .toggleStyle(.checkbox)
+                    .help("Switch to a small panel that floats in front of other apps")
             }
         }
         .padding(12)

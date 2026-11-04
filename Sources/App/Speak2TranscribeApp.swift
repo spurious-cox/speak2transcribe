@@ -12,6 +12,26 @@ struct Speak2TranscribeApp: App {
         }
         // MyTranscribe's window: 640 × 420 of content under a 32-point title bar.
         .defaultSize(width: 640, height: 452)
+        .commands {
+            CommandGroup(replacing: .help) { HelpMenuItem() }
+        }
+
+        Window("Speak2Transcribe Help", id: "help") {
+            HelpView()
+        }
+        .defaultSize(width: 480, height: 560)
+    }
+}
+
+/// Help ▸ Speak2Transcribe Help (⌘?).
+struct HelpMenuItem: View {
+    @Environment(\.openWindow) private var openWindow
+    var body: some View {
+        Button("Speak2Transcribe Help") {
+            openWindow(id: "help")
+            NSApp.activate()
+        }
+        .keyboardShortcut("?", modifiers: .command)
     }
 }
 

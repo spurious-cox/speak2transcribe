@@ -19,6 +19,8 @@ struct SourceSwitch: View {
                             .fill(chosen ? Color.accentColor : Color.primary.opacity(0.1)))
                 }
                 .buttonStyle(.plain)
+                .help(item == .mac ? "Transcribe what this Mac is playing"
+                                   : "Transcribe what you say into the microphone")
             }
         }
         .disabled(disabled)
@@ -41,12 +43,15 @@ struct PanelView: View {
                     }
                 }
                 .frame(width: 72)
+                .help("Start or stop transcribing")
                 SourceSwitch(source: $source, disabled: engine.running)
                 Spacer()
                 Button("Full Window") { PanelController.shared.setFloating(false) }
+                    .help("Back to the full window")
             }
             Toggle("Type at cursor", isOn: $typeAtCursor)
                 .toggleStyle(.checkbox)
+                .help("Type the text into the app you are using, at its cursor")
                 .onChange(of: typeAtCursor) { _, on in
                     // The switch stays on either way. macOS reports a grant
                     // made while the app is running only after a relaunch.
