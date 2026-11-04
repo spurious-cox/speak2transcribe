@@ -46,10 +46,12 @@ struct PanelView: View {
                 Button("Full Window") { PanelController.shared.setFloating(false) }
             }
             Toggle("Type at cursor", isOn: $typeAtCursor)
+                .toggleStyle(.checkbox)
                 .onChange(of: typeAtCursor) { _, on in
+                    // The switch stays on either way. macOS reports a grant
+                    // made while the app is running only after a relaunch.
                     if on && !Typist.requestAccess() {
-                        typeAtCursor = false
-                        engine.status = "Turn on Speak2Transcribe in System Settings ▸ Privacy & Security ▸ Device Control and Data Access, then switch Type at cursor on again."
+                        engine.status = "Type at cursor needs Speak2Transcribe turned on in System Settings ▸ Privacy & Security ▸ Device Control and Data Access. If it already is, quit and reopen Speak2Transcribe."
                     }
                 }
             Text(latest)

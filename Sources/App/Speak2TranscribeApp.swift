@@ -27,11 +27,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    func applicationDidFinishLaunching(_ notification: Notification) {
-        // Type at cursor stays on only while macOS still allows it.
-        if !Typist.allowed { UserDefaults.standard.set(false, forKey: "typeAtCursor") }
-    }
-
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         !UserDefaults.standard.bool(forKey: "floating")
     }

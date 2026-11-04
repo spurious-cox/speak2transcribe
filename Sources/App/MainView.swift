@@ -49,6 +49,7 @@ struct MainView: View {
                 Toggle("Floating", isOn: Binding(
                     get: { floating },
                     set: { PanelController.shared.setFloating($0) }))
+                    .toggleStyle(.checkbox)
             }
         }
         .padding(12)

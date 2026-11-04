@@ -24,7 +24,9 @@ enum Typist {
     }
 
     static func type(_ text: String) {
-        guard allowed, targetIsElsewhere, !text.isEmpty else { return }
+        // Not gated on `allowed`: it can read false for a grant made since
+        // launch. Without permission macOS simply drops the keystrokes.
+        guard targetIsElsewhere, !text.isEmpty else { return }
         queue.async {
             let source = CGEventSource(stateID: .hidSystemState)
             for (index, line) in text.components(separatedBy: "\n").enumerated() {
