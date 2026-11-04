@@ -65,6 +65,8 @@ struct PanelView: View {
             .defaultScrollAnchor(.bottom)
             .frame(maxHeight: .infinity)
             .background(Color(nsColor: .textBackgroundColor))
+            .clipShape(RoundedRectangle(cornerRadius: 6))
+            .overlay(RoundedRectangle(cornerRadius: 6).stroke(.separator))   // as in the main window
             Text(engine.status.isEmpty ? source.readyText : engine.status)
                 .font(.caption)
                 .foregroundStyle(.secondary)
