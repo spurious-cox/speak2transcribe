@@ -1,0 +1,33 @@
+# XcodeGen spec — `xcodegen` writes Transcriber.xcodeproj from this file.
+name: Transcriber
+options:
+  bundleIdPrefix: com.timmccoy
+  deploymentTarget:
+    macOS: "26.0"
+settings:
+  base:
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    SWIFT_VERSION: "5.0"
+    DEVELOPMENT_TEAM: RUDN8D7ZN9
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGN_IDENTITY: "Apple Development"   # Apple Distribution for the App Store
+    ENABLE_HARDENED_RUNTIME: YES
+    ARCHS: arm64
+targets:
+  Transcriber:
+    type: application
+    platform: macOS
+    sources: [Sources, Resources]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.timmccoy.transcriber
+        PRODUCT_NAME: Transcriber
+        CODE_SIGN_ENTITLEMENTS: Transcriber.entitlements
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Transcriber
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.productivity
+        INFOPLIST_KEY_NSHumanReadableCopyright: "© 2026 Tim McCoy. MIT License."
+        INFOPLIST_KEY_NSMicrophoneUsageDescription: "Transcriber listens to your voice when Mic is chosen so it can transcribe what you say."
+        INFOPLIST_KEY_NSScreenCaptureUsageDescription: "Transcriber listens to the sound this Mac is playing so it can transcribe it."
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
