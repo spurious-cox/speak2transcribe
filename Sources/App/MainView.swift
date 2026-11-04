@@ -10,8 +10,6 @@ struct MainView: View {
     var body: some View {
         VStack(spacing: 10) {
             HStack {
-                SourceSwitch(source: $source, disabled: engine.running)
-
                 Button(engine.running ? "Stop" : "Capture") {
                     Task {
                         if engine.running { await engine.stop() } else { await engine.start(source) }
@@ -19,6 +17,8 @@ struct MainView: View {
                 }
                 .keyboardShortcut(.return, modifiers: .command)
                 .frame(width: 80)
+
+                SourceSwitch(source: $source, disabled: engine.running)
 
                 Spacer()
 

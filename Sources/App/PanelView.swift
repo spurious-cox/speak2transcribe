@@ -35,13 +35,13 @@ struct PanelView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                SourceSwitch(source: $source, disabled: engine.running)
                 Button(engine.running ? "Stop" : "Capture") {
                     Task {
                         if engine.running { await engine.stop() } else { await engine.start(source) }
                     }
                 }
                 .frame(width: 72)
+                SourceSwitch(source: $source, disabled: engine.running)
                 Spacer()
                 Button("Full Window") { PanelController.shared.setFloating(false) }
             }
