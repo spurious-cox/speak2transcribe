@@ -1,12 +1,12 @@
 import AVFoundation
 import ScreenCaptureKit
 
-/// Everything the Mac is playing, through ScreenCaptureKit. Transcriber's own
+/// Everything the Mac is playing, through ScreenCaptureKit. Speak2Transcribe's own
 /// sound is left out. Needs Screen & System Audio Recording permission.
 final class SystemAudioSource: NSObject, AudioSource, SCStreamOutput, SCStreamDelegate, @unchecked Sendable {
     private var stream: SCStream?
     private var deliver: (@Sendable (AVAudioPCMBuffer) -> Void)?
-    private let queue = DispatchQueue(label: "Transcriber.SystemAudio")
+    private let queue = DispatchQueue(label: "Speak2Transcribe.SystemAudio")
 
     func start(_ deliver: @escaping @Sendable (AVAudioPCMBuffer) -> Void) async throws {
         self.deliver = deliver
@@ -14,7 +14,7 @@ final class SystemAudioSource: NSObject, AudioSource, SCStreamOutput, SCStreamDe
         do {
             content = try await SCShareableContent.excludingDesktopWindows(false, onScreenWindowsOnly: true)
         } catch {
-            throw CaptureError.denied("Screen & System Audio Recording is off. Turn on Transcriber in System Settings ▸ Privacy & Security, then try again.")
+            throw CaptureError.denied("Screen & System Audio Recording is off. Turn on Speak2Transcribe in System Settings ▸ Privacy & Security, then try again.")
         }
         guard let display = content.displays.first else {
             throw CaptureError.failed("No display found to capture audio from.")

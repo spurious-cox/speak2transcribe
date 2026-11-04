@@ -1,0 +1,77 @@
+import SwiftUI
+
+/// Mac / Mic as two buttons; the chosen one is filled with the accent color.
+/// (A segmented control draws its selection dim in a panel that is never key.)
+struct SourceSwitch: View {
+    @Binding var source: Source
+    var disabled: Bool
+
+    var body: some View {
+        HStack(spacing: 4) {
+            ForEach(Source.allCases) { item in
+                let chosen = item == source
+                Button { source = item } label: {
+                    Text(item.rawValue)
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundStyle(chosen ? Color.white : Color.secondary)
+                        .frame(width: 48, height: 22)
+                        .background(RoundedRectangle(cornerRadius: 5)
+                            .fill(chosen ? Color.accentColor : Color.primary.opacity(0.1)))
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .disabled(disabled)
+        .opacity(disabled ? 0.6 : 1)
+    }
+}
+
+/// The floating panel: source, Capture, Type at cursor, and the latest text.
+struct PanelView: View {
+    @EnvironmentObject private var engine: TranscriptionEngine
+    @AppStorage("source") private var source: Source = .mac
+    @AppStorage("typeAtCursor") private var typeAtCursor = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                SourceSwitch(source: $source, disabled: engine.running)
+                Button(engine.running ? "Stop" : "Capture") {
+                    Task {
+                        if engine.running { await engine.stop() } else { await engine.start(source) }
+                    }
+                }
+                .frame(width: 72)
+                Spacer()
+                Button("Full Window") { PanelController.shared.setFloating(false) }
+            }
+            Toggle("Type at cursor", isOn: $typeAtCursor)
+                .onChange(of: typeAtCursor) { _, on in
+                    if on && !Typist.requestAccess() {
+                        typeAtCursor = false
+                        engine.status = "Turn on Speak2Transcribe in System Settings ▸ Privacy & Security ▸ Device Control and Data Access, then switch Type at cursor on again."
+                    }
+                }
+            Text(latest)
+                .font(.callout)
+                .foregroundStyle(engine.pending.isEmpty ? .primary : .secondary)
+                .lineLimit(2)
+                .truncationMode(.head)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            Text(engine.status.isEmpty ? source.readyText : engine.status)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .lineLimit(2)
+        }
+        .padding(.horizontal, 12)
+        .padding(.top, 30)       // under the panel's title bar
+        .padding(.bottom, 10)
+        .frame(width: 360)
+    }
+
+    /// The phrase being heard, or else the end of the transcript.
+    private var latest: String {
+        if !engine.pending.isEmpty { return engine.pending }
+        return String(engine.text.suffix(160)).replacingOccurrences(of: "\n", with: " ")
+    }
+}

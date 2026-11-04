@@ -6,7 +6,7 @@ final class MicSource: AudioSource {
 
     func start(_ deliver: @escaping @Sendable (AVAudioPCMBuffer) -> Void) async throws {
         guard await AVCaptureDevice.requestAccess(for: .audio) else {
-            throw CaptureError.denied("Microphone access is off. Turn on Transcriber in System Settings ▸ Privacy & Security ▸ Microphone.")
+            throw CaptureError.denied("Microphone access is off. Turn on Speak2Transcribe in System Settings ▸ Privacy & Security ▸ Microphone.")
         }
         let input = engine.inputNode
         let format = input.outputFormat(forBus: 0)

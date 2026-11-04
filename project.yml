@@ -1,12 +1,12 @@
-# XcodeGen spec — `xcodegen` writes Transcriber.xcodeproj from this file.
-name: Transcriber
+# XcodeGen spec — `xcodegen` writes Speak2Transcribe.xcodeproj from this file.
+name: Speak2Transcribe
 options:
   bundleIdPrefix: com.timmccoy
   deploymentTarget:
     macOS: "26.0"
 settings:
   base:
-    MARKETING_VERSION: "0.1.0"
+    MARKETING_VERSION: "0.2.0"
     CURRENT_PROJECT_VERSION: "1"
     SWIFT_VERSION: "5.0"
     DEVELOPMENT_TEAM: RUDN8D7ZN9
@@ -15,19 +15,19 @@ settings:
     ENABLE_HARDENED_RUNTIME: YES
     ARCHS: arm64
 targets:
-  Transcriber:
+  Speak2Transcribe:
     type: application
     platform: macOS
     sources: [Sources, Resources]
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.timmccoy.transcriber
-        PRODUCT_NAME: Transcriber
-        CODE_SIGN_ENTITLEMENTS: Transcriber.entitlements
+        PRODUCT_BUNDLE_IDENTIFIER: com.timmccoy.speak2transcribe
+        PRODUCT_NAME: Speak2Transcribe
+        CODE_SIGN_ENTITLEMENTS: Speak2Transcribe.entitlements
         GENERATE_INFOPLIST_FILE: YES
-        INFOPLIST_KEY_CFBundleDisplayName: Transcriber
+        INFOPLIST_KEY_CFBundleDisplayName: Speak2Transcribe
         INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.productivity
         INFOPLIST_KEY_NSHumanReadableCopyright: "© 2026 Tim McCoy. MIT License."
-        INFOPLIST_KEY_NSMicrophoneUsageDescription: "Transcriber listens to your voice when Mic is chosen so it can transcribe what you say."
-        INFOPLIST_KEY_NSScreenCaptureUsageDescription: "Transcriber listens to the sound this Mac is playing so it can transcribe it."
+        INFOPLIST_KEY_NSMicrophoneUsageDescription: "Speak2Transcribe listens to your voice when Mic is chosen so it can transcribe what you say."
+        INFOPLIST_KEY_NSScreenCaptureUsageDescription: "Speak2Transcribe listens to the sound this Mac is playing so it can transcribe it."
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon

@@ -1,4 +1,4 @@
-# Transcriber.app — Swift rewrite plan (sketch)
+# Speak2Transcribe.app — Swift rewrite plan (sketch)
 
 A native, sandboxed, App Store–eligible successor to MyTranscribe. Separate app, separate bundle id; MyTranscribe stays as it is.
 
@@ -11,7 +11,7 @@ A native, sandboxed, App Store–eligible successor to MyTranscribe. Separate ap
 
 ## Stack
 
-| Piece | MyTranscribe | Transcriber |
+| Piece | MyTranscribe | Speak2Transcribe |
 |---|---|---|
 | Language / UI | Python + PyObjC (AppKit) | Swift + SwiftUI, AppKit NSPanel for the floater |
 | Speech-to-text | Whisper (torch), 10 s chunks | Apple SpeechAnalyzer + SpeechTranscriber (macOS 26), on-device, live results |
@@ -26,17 +26,17 @@ Fallback if SpeechTranscriber accuracy or languages fall short: whisper.cpp (Cor
 ## Structure
 
 ```
-Transcriber/
-  Transcriber.xcodeproj
+Speak2Transcribe/
+  Speak2Transcribe.xcodeproj
   Sources/
-    App/          TranscriberApp.swift, MainWindow.swift, FloatingPanel.swift
+    App/          Speak2TranscribeApp.swift, MainWindow.swift, FloatingPanel.swift
     Capture/      SystemAudioSource.swift (SCStream), MicSource.swift (AVAudioEngine)
     Transcribe/   Transcriber.swift (SpeechAnalyzer), BreakWords.swift ("new line")
     Output/       Typist.swift (CGEvent), Transcript.swift (copy/save)
-  Resources/      Assets.xcassets (icon), Transcriber.entitlements
+  Resources/      Assets.xcassets (icon), Speak2Transcribe.entitlements
 ```
 
-Data flow: `AudioSource` (protocol; system or mic) → `AsyncStream<AVAudioPCMBuffer>` → `Transcriber` → finalized text → `BreakWords` → transcript view + `Typist` (when Type at cursor is on and Transcriber isn't frontmost).
+Data flow: `AudioSource` (protocol; system or mic) → `AsyncStream<AVAudioPCMBuffer>` → `Transcriber` → finalized text → `BreakWords` → transcript view + `Typist` (when Type at cursor is on and Speak2Transcribe isn't frontmost).
 
 ## Entitlements and permissions
 
@@ -61,4 +61,4 @@ Data flow: `AudioSource` (protocol; system or mic) → `AsyncStream<AVAudioPCMBu
 - **Accuracy vs Whisper** — compare on the same recordings in milestone 1.
 - **Speaker labels** — SpeechTranscriber has none; drop or defer.
 - **Minimum macOS** — SpeechAnalyzer needs macOS 26; arm64 only.
-- **Name** — the app is called Transcriber. "Transcriber" alone is already taken on the Mac App Store (Binaries Lab), and store names must be unique, so the store listing needs a longer name such as "Transcriber – Type at Cursor". The app's own name in the Dock and menu bar can stay Transcriber.
+- **Name** — Speak2Transcribe (no App Store app by that name, checked 2026-11-04).

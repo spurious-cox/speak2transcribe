@@ -5,17 +5,12 @@ import UniformTypeIdentifiers
 struct MainView: View {
     @EnvironmentObject private var engine: TranscriptionEngine
     @AppStorage("source") private var source: Source = .mac
+    @AppStorage("floating") private var floating = false
 
     var body: some View {
         VStack(spacing: 10) {
             HStack {
-                Picker("Source", selection: $source) {
-                    ForEach(Source.allCases) { Text($0.rawValue).tag($0) }
-                }
-                .pickerStyle(.segmented)
-                .labelsHidden()
-                .frame(width: 140)
-                .disabled(engine.running)
+                SourceSwitch(source: $source, disabled: engine.running)
 
                 Button(engine.running ? "Stop" : "Capture") {
                     Task {
@@ -46,12 +41,21 @@ struct MainView: View {
                 .onChange(of: engine.text + engine.pending) { proxy.scrollTo("end") }
             }
 
-            Text(engine.status.isEmpty ? source.readyText : engine.status)
-                .font(.callout)
-                .foregroundStyle(.secondary)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            HStack(alignment: .top) {
+                Text(engine.status.isEmpty ? source.readyText : engine.status)
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Toggle("Floating", isOn: Binding(
+                    get: { floating },
+                    set: { PanelController.shared.setFloating($0) }))
+            }
         }
         .padding(12)
+        .background(WindowAccessor { window in
+            PanelController.shared.mainWindow = window
+            if floating { PanelController.shared.setFloating(true) }   // reopen as left
+        })
         .onChange(of: source) { if !engine.running { engine.status = "" } }
     }
 
