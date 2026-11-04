@@ -54,26 +54,34 @@ struct PanelView: View {
                         engine.status = "Type at cursor needs Speak2Transcribe turned on in System Settings ▸ Privacy & Security ▸ Device Control and Data Access. If it already is, quit and reopen Speak2Transcribe."
                     }
                 }
-            Text(latest)
-                .font(.callout)
-                .foregroundStyle(engine.pending.isEmpty ? .primary : .secondary)
-                .lineLimit(2)
-                .truncationMode(.head)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            // A small text box, as in MyTranscribe's panel.
+            ScrollView {
+                Text(latest)
+                    .font(.callout)
+                    .foregroundStyle(engine.pending.isEmpty ? .primary : .secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(4)
+            }
+            .defaultScrollAnchor(.bottom)
+            .frame(maxHeight: .infinity)
+            .background(Color(nsColor: .textBackgroundColor))
             Text(engine.status.isEmpty ? source.readyText : engine.status)
                 .font(.caption)
                 .foregroundStyle(.secondary)
-                .lineLimit(2)
+                .lineLimit(1)
+                .truncationMode(.tail)
+                .help(engine.status)
         }
         .padding(.horizontal, 12)
         .padding(.top, 30)       // under the panel's title bar
-        .padding(.bottom, 10)
-        .frame(width: 360)
+        .padding(.bottom, 8)
+        // MyTranscribe's panel size, title bar included.
+        .frame(width: 360, height: 194)
     }
 
     /// The phrase being heard, or else the end of the transcript.
     private var latest: String {
         if !engine.pending.isEmpty { return engine.pending }
-        return String(engine.text.suffix(160)).replacingOccurrences(of: "\n", with: " ")
+        return String(engine.text.suffix(600))
     }
 }

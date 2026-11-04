@@ -5,7 +5,7 @@ import SwiftUI
 /// focus from them, so Type at cursor lands in the app you were using.
 final class FloatingPanel: NSPanel {
     init<Content: View>(@ViewBuilder content: () -> Content) {
-        super.init(contentRect: NSRect(x: 0, y: 0, width: 360, height: 150),
+        super.init(contentRect: NSRect(x: 0, y: 0, width: 360, height: 194),
                    styleMask: [.titled, .closable, .nonactivatingPanel, .utilityWindow, .fullSizeContentView],
                    backing: .buffered, defer: false)
         title = "Speak2Transcribe"
