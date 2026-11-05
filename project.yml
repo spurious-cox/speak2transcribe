@@ -6,7 +6,7 @@ options:
     macOS: "26.0"
 settings:
   base:
-    MARKETING_VERSION: "0.3.0"
+    MARKETING_VERSION: "1.0"
     CURRENT_PROJECT_VERSION: "1"
     SWIFT_VERSION: "5.0"
     DEVELOPMENT_TEAM: RUDN8D7ZN9
@@ -31,3 +31,10 @@ targets:
         INFOPLIST_KEY_NSMicrophoneUsageDescription: "Speak2Transcribe listens to your voice when Mic is chosen so it can transcribe what you say."
         INFOPLIST_KEY_NSScreenCaptureUsageDescription: "Speak2Transcribe listens to the sound this Mac is playing so it can transcribe it."
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
+      configs:
+        # App Store builds: Xcode manages the Apple Distribution certificate
+        # and the provisioning profile (see release.sh).
+        Release:
+          CODE_SIGN_STYLE: Automatic
+          CODE_SIGN_IDENTITY: "Apple Development"
