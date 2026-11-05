@@ -16,9 +16,9 @@ Character limits are App Store Connect's. Paste each field as is.
 | Content rights | Does not contain, show or access third-party content |
 | Age rating | 4+ (answer "None" to every question) |
 | Copyright | 2026 Tim McCoy |
-| Price | _to decide_ |
-| Privacy policy URL | _to decide_ |
-| Support URL | _to decide_ |
+| Price | Free |
+| Privacy policy URL | https://spurious-cox.github.io/speak2transcribe-support/privacy.html |
+| Support URL | https://spurious-cox.github.io/speak2transcribe-support/ |
 
 ## Promotional text (170)
 
