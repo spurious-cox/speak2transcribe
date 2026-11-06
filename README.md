@@ -20,6 +20,10 @@ open Python version with the same icon and features. It uses OpenAI Whisper
 instead of Apple's engine and adds speaker labels. It installs from Homebrew
 or a disk image rather than the App Store. See the table in its README.
 
+## Also: iPhone
+
+[Speak2Transcribe for iPhone](https://github.com/spurious-cox/speak2transcribe-ios) ("s2t") is a separate iOS app with a dictation keyboard that types into any app. Not in the App Store yet.
+
 ## Building
 
 Needs Xcode 26 and [XcodeGen](https://github.com/yonaskolb/XcodeGen). Run
